@@ -8,40 +8,40 @@ public class ProjectTest {
     public void constructorDefault() {
         Project project = new Project();
         Assert.assertNull(project.getId());
+        Assert.assertNull(project.getCompany());
         Assert.assertNull(project.getName());
-        Assert.assertNull(project.getCompanyId());
-        Assert.assertNull(project.getDefaultLanguageId());
-        Assert.assertNull(project.getParentProjectId());
+        Assert.assertNull(project.getDefaultLanguage());
+        Assert.assertNull(project.getParentProject());
     }
 
     @Test
     public void constructorById() {
         Project project = new Project("1");
         Assert.assertEquals("1", project.getId());
+        Assert.assertNull(project.getCompany());
         Assert.assertNull(project.getName());
-        Assert.assertNull(project.getCompanyId());
-        Assert.assertNull(project.getDefaultLanguageId());
-        Assert.assertNull(project.getParentProjectId());
+        Assert.assertNull(project.getDefaultLanguage());
+        Assert.assertNull(project.getParentProject());
     }
 
     @Test
     public void constructorNormal() {
-        Project project = new Project("name", "company", "language");
+        Project project = new Project("name", new Language("1"));
         Assert.assertNull(project.getId());
+        Assert.assertNull(project.getCompany());
         Assert.assertEquals("name", project.getName());
-        Assert.assertEquals("company", project.getCompanyId());
-        Assert.assertEquals("language", project.getDefaultLanguageId());
-        Assert.assertNull(project.getParentProjectId());
+        Assert.assertNotNull(project.getDefaultLanguage());
+        Assert.assertNull(project.getParentProject());
     }
 
     @Test
     public void constructorFull() {
-        Project project = new Project("1", "name", "company", "language");
+        Project project = new Project("1", new Company("1"), "name", new Language("1"), new Project("2"));
         Assert.assertEquals("1", project.getId());
         Assert.assertEquals("name", project.getName());
-        Assert.assertEquals("company", project.getCompanyId());
-        Assert.assertEquals("language", project.getDefaultLanguageId());
-        Assert.assertNull(project.getParentProjectId());
+        Assert.assertNotNull(project.getCompany());
+        Assert.assertNotNull(project.getDefaultLanguage());
+        Assert.assertNotNull(project.getParentProject());
     }
 
     @Test
@@ -49,13 +49,13 @@ public class ProjectTest {
         Project project = new Project();
         project.setId("1");
         project.setName("name");
-        project.setCompanyId("company");
-        project.setDefaultLanguageId("language");
-        project.setParentProjectId("parent");
+        project.setCompany(new Company("1"));
+        project.setDefaultLanguage(new Language("1"));
+        project.setParentProject(new Project("2"));
         Assert.assertEquals("1", project.getId());
         Assert.assertEquals("name", project.getName());
-        Assert.assertEquals("company", project.getCompanyId());
-        Assert.assertEquals("language", project.getDefaultLanguageId());
-        Assert.assertEquals("parent", project.getParentProjectId());
+        Assert.assertNotNull(project.getCompany());
+        Assert.assertNotNull(project.getDefaultLanguage());
+        Assert.assertNotNull(project.getParentProject());
     }
 }

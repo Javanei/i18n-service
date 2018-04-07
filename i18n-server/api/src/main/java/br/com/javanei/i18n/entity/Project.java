@@ -1,9 +1,13 @@
 package br.com.javanei.i18n.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -19,15 +23,21 @@ public class Project implements Serializable {
     @Id
     @Column(name = "PROJECT_ID", length = 36, nullable = false, updatable = false)
     private String id;
-    @Column(name = "NAME", length = 255, nullable = false)
-    private String name;
-    @Column(name = "COMPANY_ID", length = 36, nullable = false, updatable = false)
-    private String companyId;
 
-    @Column(name = "DEFAULT_LANGUAGE_ID", length = 36, nullable = false)
-    private String defaultLanguageId;
-    @Column(name = "PARENT_PROJECT_ID", length = 36)
-    private String parentProjectId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = false)
+    @JoinColumn(name = "COMPANY_ID")
+    private Company company;
+
+    @Column(name = "NAME", length = 200, nullable = false)
+    private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = true)
+    @JoinColumn(name = "DEFAULT_LANGUAGE_ID", referencedColumnName = "LANGUAGE_ID")
+    private Language defaultLanguage;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, optional = true)
+    @JoinColumn(name = "PARENT_PROJECT_ID", referencedColumnName = "PROJECT_ID")
+    private Project parentProject;
 
     public Project() {
     }
@@ -36,17 +46,17 @@ public class Project implements Serializable {
         this.id = id;
     }
 
-    public Project(String name, String companyId, String defaultLanguageId) {
+    public Project(String name, Language defaultLanguage) {
         this.name = name;
-        this.companyId = companyId;
-        this.defaultLanguageId = defaultLanguageId;
+        this.defaultLanguage = defaultLanguage;
     }
 
-    public Project(String id, String name, String companyId, String defaultLanguageId) {
+    public Project(String id, Company company, String name, Language defaultLanguage, Project parentProject) {
         this.id = id;
+        this.company = company;
         this.name = name;
-        this.companyId = companyId;
-        this.defaultLanguageId = defaultLanguageId;
+        this.defaultLanguage = defaultLanguage;
+        this.parentProject = parentProject;
     }
 
     public String getId() {
@@ -65,27 +75,27 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public String getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(String companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    public String getDefaultLanguageId() {
-        return defaultLanguageId;
+    public Language getDefaultLanguage() {
+        return defaultLanguage;
     }
 
-    public void setDefaultLanguageId(String defaultLanguageId) {
-        this.defaultLanguageId = defaultLanguageId;
+    public void setDefaultLanguage(Language defaultLanguage) {
+        this.defaultLanguage = defaultLanguage;
     }
 
-    public String getParentProjectId() {
-        return parentProjectId;
+    public Project getParentProject() {
+        return parentProject;
     }
 
-    public void setParentProjectId(String parentProjectId) {
-        this.parentProjectId = parentProjectId;
+    public void setParentProject(Project parentProject) {
+        this.parentProject = parentProject;
     }
 }
