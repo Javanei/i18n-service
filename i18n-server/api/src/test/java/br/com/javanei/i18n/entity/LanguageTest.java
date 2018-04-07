@@ -8,6 +8,7 @@ public class LanguageTest {
     public void constructorDefault() {
         Language language = new Language();
         Assert.assertNull(language.getId());
+        Assert.assertNull(language.getCompany());
         Assert.assertNull(language.getCode());
         Assert.assertNull(language.getName());
     }
@@ -16,6 +17,7 @@ public class LanguageTest {
     public void constructorById() {
         Language language = new Language("1");
         Assert.assertEquals("1", language.getId());
+        Assert.assertNull(language.getCompany());
         Assert.assertNull(language.getCode());
         Assert.assertNull(language.getName());
     }
@@ -24,14 +26,16 @@ public class LanguageTest {
     public void constructorNormal() {
         Language language = new Language("code", "name");
         Assert.assertNull(language.getId());
+        Assert.assertNull(language.getCompany());
         Assert.assertEquals("code", language.getCode());
         Assert.assertEquals("name", language.getName());
     }
 
     @Test
     public void constructorFull() {
-        Language language = new Language("1", "code", "name");
+        Language language = new Language("1", new Company("1"), "code", "name");
         Assert.assertEquals("1", language.getId());
+        Assert.assertNotNull(language.getCompany());
         Assert.assertEquals("code", language.getCode());
         Assert.assertEquals("name", language.getName());
     }
@@ -40,9 +44,11 @@ public class LanguageTest {
     public void getterAndSetter() {
         Language language = new Language();
         language.setId("1");
+        language.setCompany(new Company("1"));
         language.setCode("code");
         language.setName("name");
         Assert.assertEquals("1", language.getId());
+        Assert.assertNotNull(language.getCompany());
         Assert.assertEquals("code", language.getCode());
         Assert.assertEquals("name", language.getName());
     }
