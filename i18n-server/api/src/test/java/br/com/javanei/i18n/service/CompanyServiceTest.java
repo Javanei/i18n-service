@@ -10,6 +10,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,5 +76,33 @@ public class CompanyServiceTest {
     @Test(expected = EntityNotFoundException.class)
     public void findByIdNotFound() {
         companyService.findById("1");
+    }
+
+    @Test
+    public void delete() {
+        //given
+        Company existing = new Company("1", "Existing");
+        Mockito.when(companyDAO.getOne("1")).thenReturn(existing);
+
+        //when
+        companyService.delete("1");
+
+        //then
+        Mockito.verify(companyDAO).delete(existing);
+    }
+
+    @Test
+    public void findAll() {
+        //given
+        Company existing = new Company("1", "Existing");
+        List<Company> list = new ArrayList<>();
+        list.add(existing);
+        Mockito.when(companyDAO.findAll()).thenReturn(list);
+
+        //when
+        List<Company> result = companyService.findAll();
+
+        //then
+        assertThat(result.size()).isEqualTo(1);
     }
 }
