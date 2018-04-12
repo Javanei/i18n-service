@@ -2,7 +2,6 @@ package br.com.javanei.i18n.service;
 
 import br.com.javanei.i18n.dao.CompanyDAO;
 import br.com.javanei.i18n.entity.Company;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,11 @@ import static org.springframework.transaction.annotation.Propagation.REQUIRED;
 
 @Service
 public class CompanyService {
-    @Autowired
     private CompanyDAO companyDAO;
+
+    public CompanyService(CompanyDAO companyDAO) {
+        this.companyDAO = companyDAO;
+    }
 
     @Transactional(propagation = REQUIRED)
     public Company create(Company entity) {
@@ -55,6 +57,6 @@ public class CompanyService {
         if (o.isPresent()) {
             return o.get();
         }
-        throw new EntityNotFoundException("Company not found withh id [" + id + "]");
+        throw new EntityNotFoundException("Company not found with id [" + id + "]");
     }
 }
