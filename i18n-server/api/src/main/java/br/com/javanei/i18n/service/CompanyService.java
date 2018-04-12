@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,9 +34,20 @@ public class CompanyService {
         return entity;
     }
 
+    @Transactional(propagation = REQUIRED)
+    public void delete(String id) {
+        Company existing = companyDAO.getOne(id);
+        companyDAO.delete(existing);
+    }
+
     @Transactional(propagation = NOT_SUPPORTED, readOnly = true)
     public Company findById(String id) {
         return this.getByIdRequired(id);
+    }
+
+    @Transactional(propagation = NOT_SUPPORTED, readOnly = true)
+    public List<Company> findAll() {
+        return companyDAO.findAll();
     }
 
     private Company getByIdRequired(String id) {
