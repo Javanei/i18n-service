@@ -1,2 +1,5 @@
-.idea\
+.idea/
+api/target/
 i18n-server-api.iml
+application.properties
+api/src/main/resources/application.properties
