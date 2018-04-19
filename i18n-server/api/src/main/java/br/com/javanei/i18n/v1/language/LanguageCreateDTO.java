@@ -58,7 +58,6 @@ public class LanguageCreateDTO implements Serializable {
         return "LanguageCreateDTO{" +
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
-                ", companyId='" + companyId + '\'' +
                 '}';
     }
 }
