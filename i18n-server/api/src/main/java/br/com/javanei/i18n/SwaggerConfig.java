@@ -26,8 +26,8 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo("Company", //title
-                "Company administration API", //description
+        return new ApiInfo("Internationalization", //title
+                "Internationalization API", //description
                 "v1", //version
                 null, //termsOfServiceUrl
                 null, //contact
