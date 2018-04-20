@@ -59,6 +59,19 @@ public class ProjectMapperTest {
     }
 
     @Test
+    public void entityFromCreateDTONotNull() {
+        ProjectCreateDTO dto = new ProjectCreateDTO("Project 1", "1", "2", "2");
+
+        Project entity = ProjectMapper.entityFromCreateDTO(dto);
+
+        assertThat(entity.getId()).isNull();
+        assertThat(entity.getName()).isEqualTo("Project 1");
+        assertThat(entity.getDefaultLanguage().getId()).isEqualTo("1");
+        assertThat(entity.getParentProject().getId()).isEqualTo("2");
+        assertThat(entity.getCompany().getId()).isEqualTo("2");
+    }
+
+    @Test
     public void entityFromUpdateDTO() {
         ProjectUpdateDTO dto = new ProjectUpdateDTO("Project 1");
 
